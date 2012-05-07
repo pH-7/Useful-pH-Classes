@@ -77,13 +77,13 @@ class Db {
         return self::$_oInstance;
     }
 
-        /**
-         * @desc Increment function.
-         * @return void
-         */
-        private function increment() {
-            ++self::$iCount;
-        }
+    /**
+     * @desc Increment function.
+     * @return void
+     */
+    private function increment() {
+        ++self::$iCount;
+    }
 
     /**
      * @desc Initiates a transaction.
