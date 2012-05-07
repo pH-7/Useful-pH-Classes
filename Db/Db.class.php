@@ -285,8 +285,8 @@ class Db {
 
      /**
      * @desc Free database.
-     * @param object $oCloseCursor object close cursor of PDOStatement class. Default value NULL
-     * @param bool $bCloseConnection for close connection of PDO. Default value TRUE
+     * @param object $oCloseCursor Db object close cursor of PDOStatement class. Default value NULL
+     * @param bool $bCloseConnection Close connection of PDO. Default value TRUE
      */
     public static function free(&$oCloseCursor = NULL, $bCloseConnection = TRUE) {
         // Close Cursor
