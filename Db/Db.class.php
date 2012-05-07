@@ -18,6 +18,7 @@ class Db {
     /**
      * @desc static attributes of the class
      * Holds an insance of self
+     *
      * $@var $sDsn Data Source Name
      * @var string $sUsername
      * @var string $sPassword
@@ -41,40 +42,40 @@ class Db {
     * @desc Return DB instance or create intitial connection.
     * @return object (PDO)
     */
-        public static function getInstance($sDsn = NULL, $sUsername = NULL, $sPassword = NULL, $aDriverOptions = NULL, $sPrefix = NULL) {
-                if(self::$_oInstance === NULL)
-                {
-                    if(!empty($sDsn))
-                    {
-                       self::$sDsn = $sDsn;
-                    }
+    public static function getInstance($sDsn = NULL, $sUsername = NULL, $sPassword = NULL, $aDriverOptions = NULL, $sPrefix = NULL) {
+        if(NULL === self::$_oInstance)
+        {
+            if(!empty($sDsn))
+            {
+                self::$sDsn = $sDsn;
+            }
 
-                    if(!empty($sUsername))
-                    {
-                        self::$sUsername = $sUsername;
-                    }
+            if(!empty($sUsername))
+            {
+                self::$sUsername = $sUsername;
+            }
 
-                    if(!empty($sPassword))
-                    {
-                        self::$sPassword = $sPassword;
-                    }
+            if(!empty($sPassword))
+            {
+                self::$sPassword = $sPassword;
+            }
 
-                    if(!empty($aDriverOptions))
-                    {
-                        self::$aDriverOptions = $aDriverOptions;
-                    }
+            if(!empty($aDriverOptions))
+            {
+                self::$aDriverOptions = $aDriverOptions;
+            }
 
-                    if(!empty($sPrefix))
-                    {
-                        self::$sPrefix = $sPrefix;
-                    }
+            if(!empty($sPrefix))
+            {
+                self::$sPrefix = $sPrefix;
+            }
 
-                    self::$_oInstance = new \PDO(self::$sDsn, self::$sUsername, self::$sPassword, self::$aDriverOptions);
-                    self::$_oInstance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-                }
-
-                return self::$_oInstance;
+            self::$_oInstance = new \PDO(self::$sDsn, self::$sUsername, self::$sPassword, self::$aDriverOptions);
+            self::$_oInstance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
+
+        return self::$_oInstance;
+    }
 
         /**
          * @desc Increment function.
@@ -245,31 +246,31 @@ class Db {
         return self::$_oInstance->setAttribute($iAttribute, $mValue);
     }
 
-       /**
-        * @desc Count the number of requests.
-        * @return float number
-       */
-      public static function queryCount() {
+    /**
+     * @desc Count the number of requests.
+     * @return float number
+     */
+    public static function queryCount() {
         return self::$iCount;
-      }
+    }
 
-      /**
-       * @desc Add Time Query.
-       * @param integer $iStartTime
-       * @param integer $iEndTime
-       * @return void
-       */
-      public function addTime($iStartTime, $iEndTime) {
+    /**
+     * @desc Add Time Query.
+     * @param integer $iStartTime
+     * @param integer $iEndTime
+     * @return void
+     */
+    public function addTime($iStartTime, $iEndTime) {
         self::$iTime += round($iEndTime - $iStartTime, 6);
-      }
+    }
 
-      /**
-       * @desc Time Query.
-       * @return string
-       */
-      public static function time() {
+    /**
+     * @desc Time Query.
+     * @return string
+     */
+    public static function time() {
         return self::$iTime;
-      }
+    }
 
     /**
      * @desc If table name is empty, only prefix will be returned otherwise the table name with its prefix will be returned.
@@ -277,26 +278,25 @@ class Db {
      * @param boolean $bTrim With or without a space before and after the table name. Default valut is "false", so with space before and after table name.
      * @return string prefixed table name, just prefix if table name is empty.
      */
-   public static function prefix($sTable = '', $bTrim = false) {
-           $sSpace = (!$bTrim) ? ' ' : '';
-           return ($sTable !== '') ? $sSpace . self::$sPrefix . $sTable . $sSpace : self::$sPrefix;
+    public static function prefix($sTable = '', $bTrim = false) {
+        $sSpace = (!$bTrim) ? ' ' : '';
+        return ($sTable !== '') ? $sSpace . self::$sPrefix . $sTable . $sSpace : self::$sPrefix;
     }
 
      /**
      * @desc Free database.
-     * @param bool $bCloseCursor for method closeCursor of PDOStatement class.
-     * @param bool $bCloseConnection for close connection of PDO.
+     * @param object $oCloseCursor object close cursor of PDOStatement class. Default value NULL
+     * @param bool $bCloseConnection for close connection of PDO. Default value TRUE
      */
-    public static function free($bCloseCursor = NULL, $bCloseConnection = TRUE)
-    {
-      // Close Cursor
-      if(!empty($bCloseCursor)) {
-      $bCloseCursor->closeCursor();
-      }
-      // Free instance object PDO
-      if($bCloseConnection === TRUE) {
-      return self::$_oInstance = NULL;
-      }
+    public static function free(&$oCloseCursor = NULL, $bCloseConnection = TRUE) {
+        // Close Cursor
+        if(NULL !== $oCloseCursor)
+            $oCloseCursor->closeCursor();
+
+        // Free instance object PDO
+        if(TRUE === $bCloseConnection)
+            return self::$_oInstance = NULL;
+
     }
 
     /**
