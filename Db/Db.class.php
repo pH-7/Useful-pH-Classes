@@ -46,29 +46,19 @@ class Db {
         if(NULL === self::$_oInstance)
         {
             if(!empty($sDsn))
-            {
                 self::$sDsn = $sDsn;
-            }
 
             if(!empty($sUsername))
-            {
                 self::$sUsername = $sUsername;
-            }
 
             if(!empty($sPassword))
-            {
                 self::$sPassword = $sPassword;
-            }
 
             if(!empty($aDriverOptions))
-            {
                 self::$aDriverOptions = $aDriverOptions;
-            }
 
             if(!empty($sPrefix))
-            {
                 self::$sPrefix = $sPrefix;
-            }
 
             self::$_oInstance = new \PDO(self::$sDsn, self::$sUsername, self::$sPassword, self::$aDriverOptions);
             self::$_oInstance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
