@@ -29,7 +29,7 @@ define ( 'PH7_BACKUP_FORMAT_TYPE', 'bz2' ); // 'gz', 'gzip' or 'bz2'
 
 #################### PATH ####################
 
-define ( 'PH7_PATH_FRAMEWORK', dirname(__DIR__) . PH7_DS);
+define ( 'PH7_PATH_FRAMEWORK', dirname(__DIR__) . PH7_DS );
 define ( 'PH7_PATH_BACKUP_SQL', PH7_PATH_FRAMEWORK . '_Data/Backup/SQL/' );
 
 #################### URL (PUBLIC) ####################
