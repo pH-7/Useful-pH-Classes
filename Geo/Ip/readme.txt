@@ -1,4 +1,4 @@
-Please download the MaxMind API PHP GeoIP.
+Please download the MaxMind (http://www.maxmind.com) API PHP GeoIP.
 
 --- Files --- 
 geoip.php

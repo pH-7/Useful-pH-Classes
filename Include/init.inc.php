@@ -1,12 +1,11 @@
 <?php
 /**
- * @author      SORIA Pierre-Henry
- * @email       pierrehs@hotmail.com
+ * @author      Pierre-Henry Soria <ph7software@gmail.com>
+ * @copyright   (c) 2012, Pierre-Henry Soria. All Rights Reserved.
  * @link        http://github.com/pH-7
- * @copyright   Copyright pH7 Script All Rights Reserved.
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * @license     CC-BY License - http://creativecommons.org/licenses/by/3.0/
  */
- 
+
 namespace PH7\Framework;
 defined('PH7') or exit('Restricted access');
 

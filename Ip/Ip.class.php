@@ -1,22 +1,22 @@
 <?php
 /**
- * @author      SORIA Pierre-Henry
- * @email       pierrehs@hotmail.com
+ * @author      Pierre-Henry Soria <ph7software@gmail.com>
+ * @copyright   (c) 2012, Pierre-Henry Soria. All Rights Reserved.
  * @link        http://github.com/pH-7
- * @copyright   Copyright pH7 Script All Rights Reserved.
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * @license     CC-BY License - http://creativecommons.org/licenses/by/3.0/
  */
- 
+
 namespace PH7\Framework\Ip;
 defined('PH7') or exit('Restricted access');
 
 class Ip {
 
     const IP_SITE = 'http://whatismyipaddress.com/ip/';
-    
+
     /**
-     * @desc Get IP address
-     * @return float IP address
+     * Get IP address.
+     *
+     * @return float IP address.
      */
     public static function get() {
         if ($_SERVER) {
@@ -50,9 +50,10 @@ class Ip {
     }
 
     /**
-     * @desc Returns the API IP with the IP address
-     * @param float $fIp IP address
-     * @return string URL API with the IP address
+     * Returns the API IP with the IP address.
+     *
+     * @param float $fIp IP address.
+     * @return string URL API with the IP address.
      */
     public static function api($fIp = null) {
       $fIp = (empty($fIp)) ? static::get() : $fIp;

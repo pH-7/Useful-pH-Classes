@@ -16,10 +16,10 @@ PHP 5.3.0 or higher
 
 ===== Contact =====
 
-Contact me at pierrehs@hotmail.com
+Contact me at ph7software@gmail.com
 
 
 ===== License =====
 
-CC-BY - http://creativecommons.org/licenses/by/3.0/
+CC BY - http://creativecommons.org/licenses/by/3.0/
  

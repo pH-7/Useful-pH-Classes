@@ -1,12 +1,11 @@
 <?php
 /**
- * @author      SORIA Pierre-Henry
- * @email       pierrehs@hotmail.com
+ * @author      Pierre-Henry Soria <ph7software@gmail.com>
+ * @copyright   (c) 2012, Pierre-Henry Soria. All Rights Reserved.
  * @link        http://github.com/pH-7
- * @copyright   Copyright pH7 Script All Rights Reserved.
- * @license     CC-BY - http://creativecommons.org/licenses/by/3.0/
+ * @license     CC-BY License - http://creativecommons.org/licenses/by/3.0/
  */
- 
+
 namespace PH7\Framework\Db;
 defined('PH7') or exit('Restricted access');
 
@@ -15,11 +14,13 @@ defined('PH7') or exit('Restricted access');
  */
 class Db {
 
+    const MYSQL = 'MySQL', POSTGRESQL = 'PostgreSQL';
+
     /**
-     * @desc static attributes of the class
-     * Holds an insance of self
+     * Static attributes of the class.
+     * Holds an insance of self with the \PDO class.
      *
-     * $@var $sDsn Data Source Name
+     * @var string $sDsn Data Source Name
      * @var string $sUsername
      * @var string $sPassword
      * @var string $sPrefix
@@ -31,17 +32,23 @@ class Db {
     private static $sDsn, $sUsername, $sPassword, $sPrefix, $aDriverOptions, $iCount = 0, $iTime = 0, $_oInstance = NULL;
 
     /**
-    *
-    * @desc The constructor is set to private so,
-    * so nobody can create a new instance using new.
-    *
-    */
+     * Backup path of the database and backup type format.
+     *
+     * @var string $sBackupPath
+     * @var string $sBackupFormat
+     */
+    private static $sBackupPath, $sBackupFormat;
+
+    /**
+     * The constructor is set to private, so nobody can create a new instance using new.
+     */
     private function __construct() {}
 
     /**
-    * @desc Return DB instance or create intitial connection.
-    * @return object (PDO)
-    */
+     * Return DB instance or create intitial connection.
+     *
+     * @return object (PDO)
+     */
     public static function getInstance($sDsn = NULL, $sUsername = NULL, $sPassword = NULL, $aDriverOptions = NULL, $sPrefix = NULL) {
         if(NULL === self::$_oInstance)
         {
@@ -68,7 +75,8 @@ class Db {
     }
 
     /**
-     * @desc Increment function.
+     * Increment function.
+     *
      * @return void
      */
     private function increment() {
@@ -76,7 +84,8 @@ class Db {
     }
 
     /**
-     * @desc Initiates a transaction.
+     * Initiates a transaction.
+     *
      * @return bool
      */
     public function beginTransaction() {
@@ -84,7 +93,8 @@ class Db {
     }
 
     /**
-     * @desc Commits a transaction.
+     * Commits a transaction.
+     *
      * @return bool
      */
     public function commit() {
@@ -92,7 +102,8 @@ class Db {
     }
 
     /**
-     * @desc Fetch the SQLSTATE associated with the last operation on the database handle.
+     * Fetch the SQLSTATE associated with the last operation on the database handle.
+     *
      * @return string
      */
     public function errorCode() {
@@ -100,7 +111,8 @@ class Db {
     }
 
     /**
-     * @desc Fetch extended error information associated with the last operation on the database handle.
+     * Fetch extended error information associated with the last operation on the database handle.
+     *
      * @return array
      */
     public function errorInfo() {
@@ -108,7 +120,8 @@ class Db {
     }
 
     /**
-     * @desc Execute an SQL statement and return the number of affected rows.
+     * Execute an SQL statement and return the number of affected rows.
+     *
      * @param string $sStatement
      * @return mixed (boolean | integer)
      */
@@ -121,7 +134,8 @@ class Db {
     }
 
     /**
-     * @desc Retrieve a database connection attribute.
+     * Retrieve a database connection attribute.
+     *
      * @param int $iAttribute
      * @return mixed
      */
@@ -130,7 +144,8 @@ class Db {
     }
 
     /**
-     * @desc Return an array of available PDO drivers.
+     * Return an array of available PDO drivers.
+     *
      * @return array
      */
     public function getAvailableDrivers(){
@@ -138,7 +153,8 @@ class Db {
     }
 
     /**
-     * @desc Returns the ID of the last inserted row or sequence value.
+     * Returns the ID of the last inserted row or sequence value.
+     *
      * @param string $sName Name of the sequence object from which the ID should be returned.
      * @return string
      */
@@ -147,16 +163,18 @@ class Db {
     }
 
     /**
-     * @desc Prepares a statement for execution and returns a statement object.
+     * Prepares a statement for execution and returns a statement object.
+     *
      * @param string $sStatement A valid SQL statement for the target database server.
      * @return PDOStatement
      */
-    public function prepare ($sStatement) {
+    public function prepare($sStatement) {
         return self::$_oInstance->prepare($sStatement);
     }
 
     /**
-     * @desc Execute an SQL prepared with prepare()
+     * Execute an SQL prepared with prepare() method.
+     *
      * @param string $sStatement
      * @return boolean
      */
@@ -169,7 +187,8 @@ class Db {
     }
 
     /**
-     * @desc Executes an SQL statement, returning a result set as a PDOStatement object.
+     * Executes an SQL statement, returning a result set as a PDOStatement object.
+     *
      * @param string $sStatement
      * @return mixed (object | boolean) PDOStatement object, or FALSE on failure.
      */
@@ -182,7 +201,8 @@ class Db {
     }
 
     /**
-     * @desc Execute query and return all rows in assoc array.
+     * Execute query and return all rows in assoc array.
+     *
      * @param string $sStatement
      * @return array
      */
@@ -191,7 +211,8 @@ class Db {
     }
 
     /**
-     * @desc Execute query and return one row in assoc array.
+     * Execute query and return one row in assoc array.
+     *
      * @param string $sStatement
      * @return array
      */
@@ -200,7 +221,8 @@ class Db {
     }
 
     /**
-     * @desc Execute query and select one column only.
+     * Execute query and select one column only.
+     *
      * @param string $sStatement
      * @return mixed
      */
@@ -209,7 +231,8 @@ class Db {
     }
 
     /**
-     * @desc Quotes a string for use in a query.
+     * Quotes a string for use in a query.
+     *
      * @param string $sInput
      * @param integer $iParameterType
      * @return string
@@ -219,7 +242,8 @@ class Db {
     }
 
     /**
-     * @desc Rolls back a transaction.
+     * Rolls back a transaction.
+     *
      * @return boolean
      */
     public function rollBack() {
@@ -227,7 +251,8 @@ class Db {
     }
 
     /**
-     * @desc Set an attribute.
+     * Set an attribute.
+     *
      * @param integer $iAttribute
      * @param mixed $mValue
      * @return boolean
@@ -237,7 +262,8 @@ class Db {
     }
 
     /**
-     * @desc Count the number of requests.
+     * Count the number of requests.
+     *
      * @return float number
      */
     public static function queryCount() {
@@ -245,7 +271,17 @@ class Db {
     }
 
     /**
-     * @desc Add Time Query.
+     * Show all tables.
+     *
+     * @return mixed (object | boolean) PDOStatement object, or FALSE on failure.
+     */
+    public static function showTables() {
+        return self::getInstance()->query('SHOW TABLES');
+    }
+
+    /**
+     * Add Time Query.
+     *
      * @param integer $iStartTime
      * @param integer $iEndTime
      * @return void
@@ -255,7 +291,8 @@ class Db {
     }
 
     /**
-     * @desc Time Query.
+     * Time Query.
+     *
      * @return string
      */
     public static function time() {
@@ -263,7 +300,8 @@ class Db {
     }
 
     /**
-     * @desc If table name is empty, only prefix will be returned otherwise the table name with its prefix will be returned.
+     * If table name is empty, only prefix will be returned otherwise the table name with its prefix will be returned.
+     *
      * @param string $sTable Table name.
      * @param boolean $bTrim With or without a space before and after the table name. Default valut is "false", so with space before and after table name.
      * @return string prefixed table name, just prefix if table name is empty.
@@ -274,7 +312,8 @@ class Db {
     }
 
      /**
-     * @desc Free database.
+     * Free database.
+     *
      * @param object $oCloseCursor Db object close cursor of PDOStatement class. Default value NULL
      * @param bool $bCloseConnection Close connection of PDO. Default value TRUE
      */
@@ -286,15 +325,57 @@ class Db {
         // Free instance object PDO
         if(TRUE === $bCloseConnection)
             return self::$_oInstance = NULL;
-
     }
 
     /**
-    *
-    * @desc Like the constructor, we make __clone private so,
-    * nobody can clone the instance
-    *
-    */
+     * Optimizing tables.
+     *
+     * @return void
+     */
+    public static function optimize() {
+        $oAllTables = static::showTables();
+        while($aTableNames = $oAllTables->fetch()) self::getInstance()->query('OPTIMIZE TABLE '. $aTableNames[0]);
+        unset($oAllTables);
+    }
+
+    /**
+     * Repair tables.
+     *
+     * @return void
+     */
+    public static function repair() {
+        $oAllTables = static::showTables();
+        while($aTableNames = $oAllTables->fetch()) self::getInstance()->query('REPAIR TABLE '. $aTableNames[0]);
+        unset($oAllTables);
+    }
+
+    /**
+     * Create a database backup.
+     *
+     * @param string $sClass The class name.
+     * @param string $sPath The path to the directory where the file will be stored backup.
+     * @param string $sFormat The compression format of the file.
+     * @throws \RuntimeException If the class is not found (invalid).
+     * @return void
+     */
+    public static function backup($sClass, $sPath, $sFormat) {
+        switch($sClass) {
+            case self::MYSQL:
+              $sClass = '\PH7\Framework\Db\Util\Backup\MySQL';
+            break;
+
+            default:
+              throw new \RuntimeException('The class "' . $sClass . '" is invalid!');
+        }
+        self::$sBackupPath = $sPath;
+        self::$sBackupFormat = $sFormat;
+        $oSQLDump = new $sClass(PH7_DATABASE_HOST, self::$sUsername, self::$sPassword, PH7_DATABASE_NAME, self::$sBackupPath, self::$sBackupFormat);
+        $oSQLDump->backup();
+    }
+
+    /**
+     * Like the constructor, we make __clone private, so nobody can clone the instance
+     */
     private function __clone()
     {
     }
