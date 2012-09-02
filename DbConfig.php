@@ -21,5 +21,6 @@ try{
     );
 
 } catch (\Exception $oE) {
+    header('HTTP/1.1 500 Internal Server Error');
     exit('Could not connect to database server!');
 }

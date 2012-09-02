@@ -16,7 +16,7 @@ class Cron {
 
         // Checks the security hash cron
         if(empty($_GET['secret_word']) || $_GET['secret_word'] !== PH7_CRON_SECURITY_HASH) {
-            header('HTTP/1.1 500 Internal Server Error');
+            header('HTTP/1.1 403 Forbidden');
             exit(gettext('Secret word is invalid for the cron hash!'));
         }
 
@@ -39,7 +39,7 @@ class Cron {
                 break;
 
                 default:
-                  header('HTTP/1.1 500 Internal Server Error');
+                  header('HTTP/1.1 400 Bad Request');
                   exit(gettext('Bad Request Error!'));
             }
         }
@@ -52,6 +52,7 @@ class Cron {
             Db::backup(Db::MYSQL, PH7_PATH_BACKUP_SQL, PH7_BACKUP_FORMAT_TYPE);
             echo gettext('Backup of the Database... Ok!') . '<br />';
         } catch (\RuntimeException $oE) {
+            header('HTTP/1.1 500 Internal Server Error');
             exit($oE->getMessage());
         }
     }
