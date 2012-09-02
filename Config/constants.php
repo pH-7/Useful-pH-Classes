@@ -25,7 +25,10 @@ define( 'PH7_DOT', '.' );
 define( 'PH7_ENCODING', 'UTF-8' );
 
 // BACKUP FORMAT TYPE
-define ( 'PH7_BACKUP_FORMAT_TYPE', 'bz2' ); // 'gz', 'gzip' or 'bz2'
+define ( 'PH7_BACKUP_FORMAT_TYPE', 'bz2' ); // Choose between 'gz', 'gzip' or 'bz2'
+
+// SECURITY URL CRON HASH
+define ( 'PH7_CRON_SECURITY_HASH', 'change_secret_cron_word_by_your' ); // Your very secret word for the URL of the cron
 
 #################### PATH ####################
 

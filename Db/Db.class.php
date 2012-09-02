@@ -32,7 +32,7 @@ class Db {
     private static $sDsn, $sUsername, $sPassword, $sPrefix, $aDriverOptions, $iCount = 0, $iTime = 0, $_oInstance = NULL;
 
     /**
-     * Backup path of the database and backup type format.
+     * Static attributes for the backup path of the database and backup type format.
      *
      * @var string $sBackupPath
      * @var string $sBackupFormat

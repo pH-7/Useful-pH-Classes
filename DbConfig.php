@@ -20,6 +20,6 @@ try{
         /* Driver */   $aDriverOptions
     );
 
-} catch (\Exception $e) {
+} catch (\Exception $oE) {
     exit('Could not connect to database server!');
 }

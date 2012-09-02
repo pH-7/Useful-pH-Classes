@@ -13,9 +13,38 @@ use PH7\Framework\Db\Db;
 class Cron {
 
     public function __construct() {
-        $this->backup();
-        $this->optimize();
-        $this->repair();
+
+        // Checks the security hash cron
+        if(empty($_GET['secret_word']) || $_GET['secret_word'] !== PH7_CRON_SECURITY_HASH) {
+            header('HTTP/1.1 500 Internal Server Error');
+            exit(gettext('Secret word is invalid for the cron hash!'));
+        }
+
+        if(!empty($_GET['option'])) {
+            switch($_GET['option']) {
+
+                // Backup
+                case 'backup':
+                  $this->backup();
+                break;
+
+                // Optimization Tables
+                case 'optimize':
+                  $this->optimize();
+                break;
+
+                // Repair Tables
+                case 'repair':
+                  $this->repair();
+                break;
+
+                default:
+                  header('HTTP/1.1 500 Internal Server Error');
+                  exit(gettext('Bad Request Error!'));
+            }
+        }
+
+        echo '<br />' . gettext('Done!') . '<br />';
     }
 
     protected function backup() {
