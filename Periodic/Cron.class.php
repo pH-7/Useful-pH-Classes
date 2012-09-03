@@ -15,7 +15,7 @@ class Cron {
     public function __construct() {
 
         // Checks the security hash cron
-        if(empty($_GET['secret_word']) || $_GET['secret_word'] !== PH7_CRON_SECURITY_HASH) {
+        if(empty($_GET['secret_word']) || strcmp($_GET['secret_word'], PH7_CRON_SECURITY_HASH) != 0) {
             header('HTTP/1.1 403 Forbidden');
             exit(gettext('Secret word is invalid for the cron hash!'));
         }
