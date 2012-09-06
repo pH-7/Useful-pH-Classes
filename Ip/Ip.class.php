@@ -16,48 +16,34 @@ class Ip {
     /**
      * Get IP address.
      *
-     * @return float IP address.
+     * @return string IP address.
      */
     public static function get() {
-        if ($_SERVER) {
-            if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-            {
-                $fIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            }
-            elseif (isset($_SERVER['HTTP_CLIENT_IP']))
-            {
-                $fIp = $_SERVER['HTTP_CLIENT_IP'];
-            }
-            else
-            {
-                $fIp = $_SERVER['REMOTE_ADDR'];
-            }
-        } else {
-            if (getenv('HTTP_X_FORWARDED_FOR'))
-            {
-                $fIp = getenv('HTTP_X_FORWARDED_FOR');
-            }
-            elseif (getenv('HTTP_CLIENT_IP'))
-            {
-                $fIp = getenv('HTTP_CLIENT_IP');
-            }
-            else
-            {
-                $fIp = getenv('REMOTE_ADDR');
-            }
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+        {
+            $sIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
         }
-         return (float) preg_match('#^[a-z0-9:.]{7,}$#', $fIp) ? $fIp : '127.0.0.1';
+        elseif (!empty($_SERVER['HTTP_CLIENT_IP']))
+        {
+            $sIp = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        else
+        {
+            $sIp = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return preg_match('/^[a-z0-9:.]{7,}$/', $sIp) ? $sIp : '0.0.0.0';
     }
 
     /**
      * Returns the API IP with the IP address.
      *
-     * @param float $fIp IP address.
+     * @param string $sIp IP address.
      * @return string URL API with the IP address.
      */
-    public static function api($fIp = null) {
-      $fIp = (empty($fIp)) ? static::get() : $fIp;
-       return static::IP_SITE . $fIp;
+    public static function api($sIp = null) {
+        $sIp = (empty($sIp)) ? static::get() : $sIp;
+        return static::IP_SITE . $sIp;
     }
 
 }
