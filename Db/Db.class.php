@@ -26,10 +26,10 @@ class Db {
      * @var string $sPrefix
      * @var array $aDriverOptions
      * @var integer $iCount
-     * @var integer $iTime
+     * @var float $fTime
      * @var object $_oInstance
      */
-    private static $sDsn, $sUsername, $sPassword, $sPrefix, $aDriverOptions, $iCount = 0, $iTime = 0, $_oInstance = NULL;
+    private static $sDsn, $sUsername, $sPassword, $sPrefix, $aDriverOptions, $iCount = 0, $fTime = 0.0, $_oInstance = NULL;
 
     /**
      * Static attributes for the backup path of the database and backup type format.
@@ -126,10 +126,10 @@ class Db {
      * @return mixed (boolean | integer)
      */
     public function exec($sStatement) {
-        $sStartTime = microtime(true);
+        $fStartTime = microtime(true);
         $mReturn = self::$_oInstance->exec($sStatement);
         $this->increment();
-        $this->addTime($sStartTime, microtime(true));
+        $this->addTime($fStartTime, microtime(true));
         return $mReturn;
     }
 
@@ -179,10 +179,10 @@ class Db {
      * @return boolean
      */
     public function execute($sStatement) {
-        $sStartTime = microtime(true);
+        $fStartTime = microtime(true);
         $bReturn = self::$_oInstance->execute($sStatement);
         $this->increment();
-        $this->addTime($sStartTime, microtime(true));
+        $this->addTime($fStartTime, microtime(true));
         return $bReturn;
     }
 
@@ -193,10 +193,10 @@ class Db {
      * @return mixed (object | boolean) PDOStatement object, or FALSE on failure.
      */
     public function query($sStatement) {
-        $sStartTime = microtime(true);
+        $fStartTime = microtime(true);
         $mReturn = self::$_oInstance->query($sStatement);
         $this->increment();
-        $this->addTime($sStartTime, microtime(true));
+        $this->addTime($fStartTime, microtime(true));
         return $mReturn;
     }
 
@@ -282,12 +282,12 @@ class Db {
     /**
      * Add Time Query.
      *
-     * @param integer $iStartTime
-     * @param integer $iEndTime
+     * @param float $fStartTime
+     * @param float $fEndTime
      * @return void
      */
-    public function addTime($iStartTime, $iEndTime) {
-        self::$iTime += round($iEndTime - $iStartTime, 6);
+    public function addTime($fStartTime, $fEndTime) {
+        self::$fTime += round($fEndTime - $fStartTime, 6);
     }
 
     /**
@@ -296,7 +296,7 @@ class Db {
      * @return string
      */
     public static function time() {
-        return self::$iTime;
+        return self::$fTime;
     }
 
     /**
