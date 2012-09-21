@@ -11,15 +11,15 @@ defined('PH7') or exit('Restricted access');
 
 class Str {
 
-      /**
-       * Escape function, uses the PHP native htmlspecialchars but improves.
-       *
-       * @param string $sText
-       * @param boolean $bStrip If true, the text will be passed through the strip_tags function PHP
-       * @return string text to HTML entities
-       */
-     public static function escape($sText, $bStrip = false) {
-         return ($bStrip) ? strip_tags($sText) : htmlspecialchars($sText, ENT_QUOTES, PH7_ENCODING);
-     }
+    /**
+     * Escape function, uses the PHP native htmlspecialchars but improves.
+     *
+     * @param string $sText
+     * @param boolean $bStrip If true, the text will be passed through the strip_tags function PHP
+     * @return string text to HTML entities
+     */
+    public static function escape($sText, $bStrip = false) {
+        return ($bStrip) ? strip_tags($sText) : htmlspecialchars($sText, ENT_QUOTES, PH7_ENCODING);
+    }
 
 }

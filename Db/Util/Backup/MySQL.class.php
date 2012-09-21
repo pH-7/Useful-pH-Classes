@@ -39,17 +39,17 @@ class MySQL {
    * The backup command to execute.
    *
    * @access private
-   * @var string $sCmd
+   * @var string $_sCmd
    */
-  private $sCmd;
+  private $_sCmd;
 
   /**
    * The extension allowed.
    *
    * @access private
-   * @var array $aZipExt
+   * @var array $_aZipExt
    */
-  private $aZipExt = array('gz'=>'gzip','bz2'=>'bzip2');
+  private $_aZipExt = array('gz'=>'gzip','bz2'=>'bzip2');
 
   /**
    * MySQLDump constructor.
@@ -65,12 +65,12 @@ class MySQL {
    */
   public function __construct($sDbHost, $sDbUser, $sDbPass, $sDbName, $sDest, $sZip = 'gz')
   {
-    $bZip = (array_key_exists($sZip, $this->aZipExt)) ? true : false;
+    $bZip = (array_key_exists($sZip, $this->_aZipExt)) ? true : false;
     $sExt = ($bZip) ? PH7_DOT . $sZip : '';
     $sFileName = 'Periodic-database-update.' . date('Y-m-d') . '.sql' . $sExt;
-    $sOptions = ($bZip) ?  ' | ' . $this->aZipExt[$sZip] : '';
+    $sOptions = ($bZip) ?  ' | ' . $this->_aZipExt[$sZip] : '';
 
-    $this->sCmd = 'mysqldump -h' . $sDbHost . ' -u' . $sDbUser . ' -p' . $sDbPass . ' ' . $sDbName . $sOptions . ' > ' . $sDest . $sFileName;
+    $this->_sCmd = 'mysqldump -h' . $sDbHost . ' -u' . $sDbUser . ' -p' . $sDbPass . ' ' . $sDbName . $sOptions . ' > ' . $sDest . $sFileName;
   }
 
   /**
@@ -82,10 +82,10 @@ class MySQL {
   public function backup()
   {
     $sError = '';
-    system($this->sCmd, $sError);
+    system($this->_sCmd, $sError);
     if ($sError)
     {
-      trigger_error('Backup failed: Command = ' . $this->sCmd . ' Error = ' . $sError);
+      trigger_error('Backup failed: Command = ' . $this->_sCmd . ' Error = ' . $sError);
     }
   }
 
