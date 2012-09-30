@@ -9,7 +9,8 @@
 namespace PH7\Framework\Loader;
 defined('PH7') or exit('Restricted access');
 
-class Autoloader {
+class Autoloader
+{
 
     /**
      * Autoload Classes.
@@ -18,8 +19,8 @@ class Autoloader {
      * @param string $sClass
      * @return void
      */
-    protected static function loadClass($sClass) {
-
+    protected static function loadClass($sClass)
+    {
         $sClass = static::clean($sClass);
 
         // To include Classes
@@ -45,7 +46,8 @@ class Autoloader {
      * @param string The class name to clean.
      * @return string The class cleaned.
      */
-    protected static function clean($sClass) {
+    protected static function clean($sClass)
+    {
         return $sClass = str_replace (array('PH7\Framework', '\\', '//'), array('/', '/', ''), $sClass);
     }
 
@@ -55,7 +57,8 @@ class Autoloader {
      * @access public
      * @return void
      */
-    public static function init() {
+    public static function init()
+    {
         spl_autoload_register(null, false);
         spl_autoload_extensions('.class.php, .interface.php, .trait.php');
         spl_autoload_register(array('self', 'loadClass'));

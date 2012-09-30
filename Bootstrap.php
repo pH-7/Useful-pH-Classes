@@ -9,7 +9,8 @@
 namespace PH7\Framework;
 define('PH7', 1);
 
-try {
+try
+{
     require __DIR__ . '/Config/constants.php';
     //require PH7_PATH_FRAMEWORK . '/Include/init.inc.php';
 
@@ -25,8 +26,8 @@ try {
     Loader\Autoloader::init();
 
     // Your code here and declaring your classes.
-
 }
-catch (\Exception $oE) {
+catch (\Exception $oE)
+{
     exit($oE->getMessage());
 }

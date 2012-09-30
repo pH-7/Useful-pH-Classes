@@ -9,7 +9,8 @@
 namespace PH7\Framework\Ip;
 defined('PH7') or exit('Restricted access');
 
-class Ip {
+class Ip
+{
 
     const IP_SITE = 'http://whatismyipaddress.com/ip/';
 
@@ -18,7 +19,8 @@ class Ip {
      *
      * @return string IP address.
      */
-    public static function get() {
+    public static function get()
+    {
         if (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
         {
             $sIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -41,7 +43,8 @@ class Ip {
      * @param string $sIp IP address.
      * @return string URL API with the IP address.
      */
-    public static function api($sIp = null) {
+    public static function api($sIp = null)
+    {
         $sIp = (empty($sIp)) ? static::get() : $sIp;
         return static::IP_SITE . $sIp;
     }

@@ -12,7 +12,8 @@ defined('PH7') or exit('Restricted access');
 /**
  * @class Singleton Class
  */
-class Db {
+class Db
+{
 
     const MYSQL = 'MySQL', POSTGRESQL = 'PostgreSQL';
 
@@ -20,24 +21,24 @@ class Db {
      * Static attributes of the class.
      * Holds an insance of self with the \PDO class.
      *
-     * @var string $sDsn Data Source Name
-     * @var string $sUsername
-     * @var string $sPassword
-     * @var string $sPrefix
-     * @var array $aDriverOptions
-     * @var integer $iCount
-     * @var float $fTime
+     * @var string $_sDsn Data Source Name
+     * @var string $_sUsername
+     * @var string $_sPassword
+     * @var string $_sPrefix
+     * @var array $_aDriverOptions
+     * @var integer $_iCount
+     * @var float $_fTime
      * @var object $_oInstance
      */
-    private static $sDsn, $sUsername, $sPassword, $sPrefix, $aDriverOptions, $iCount = 0, $fTime = 0.0, $_oInstance = NULL;
+    private static $_sDsn, $_sUsername, $_sPassword, $_sPrefix, $_aDriverOptions, $_iCount = 0, $_fTime = 0.0, $_oInstance = NULL;
 
     /**
      * Static attributes for the backup path of the database and backup type format.
      *
-     * @var string $sBackupPath
-     * @var string $sBackupFormat
+     * @var string $_sBackupPath
+     * @var string $_sBackupFormat
      */
-    private static $sBackupPath, $sBackupFormat;
+    private static $_sBackupPath, $_sBackupFormat;
 
     /**
      * The constructor is set to private, so nobody can create a new instance using new.
@@ -49,25 +50,26 @@ class Db {
      *
      * @return object (PDO)
      */
-    public static function getInstance($sDsn = NULL, $sUsername = NULL, $sPassword = NULL, $aDriverOptions = NULL, $sPrefix = NULL) {
+    public static function getInstance($sDsn = NULL, $sUsername = NULL, $sPassword = NULL, $aDriverOptions = NULL, $sPrefix = NULL)
+    {
         if(NULL === self::$_oInstance)
         {
             if(!empty($sDsn))
-                self::$sDsn = $sDsn;
+                self::$_sDsn = $sDsn;
 
             if(!empty($sUsername))
-                self::$sUsername = $sUsername;
+                self::$_sUsername = $sUsername;
 
             if(!empty($sPassword))
-                self::$sPassword = $sPassword;
+                self::$_sPassword = $sPassword;
 
             if(!empty($aDriverOptions))
-                self::$aDriverOptions = $aDriverOptions;
+                self::$_aDriverOptions = $aDriverOptions;
 
             if(!empty($sPrefix))
-                self::$sPrefix = $sPrefix;
+                self::$_sPrefix = $sPrefix;
 
-            self::$_oInstance = new \PDO(self::$sDsn, self::$sUsername, self::$sPassword, self::$aDriverOptions);
+            self::$_oInstance = new \PDO(self::$_sDsn, self::$_sUsername, self::$_sPassword, self::$_aDriverOptions);
             self::$_oInstance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
 
@@ -79,8 +81,9 @@ class Db {
      *
      * @return void
      */
-    private function increment() {
-        ++self::$iCount;
+    private function increment()
+    {
+        ++self::$_iCount;
     }
 
     /**
@@ -88,7 +91,8 @@ class Db {
      *
      * @return bool
      */
-    public function beginTransaction() {
+    public function beginTransaction()
+    {
         return self::$_oInstance->beginTransaction();
     }
 
@@ -97,7 +101,8 @@ class Db {
      *
      * @return bool
      */
-    public function commit() {
+    public function commit()
+    {
         return self::$_oInstance->commit();
     }
 
@@ -106,7 +111,8 @@ class Db {
      *
      * @return string
      */
-    public function errorCode() {
+    public function errorCode()
+    {
         return self::$_oInstance->errorCode();
     }
 
@@ -115,7 +121,8 @@ class Db {
      *
      * @return array
      */
-    public function errorInfo() {
+    public function errorInfo()
+    {
         return self::$_oInstance->errorInfo();
     }
 
@@ -125,7 +132,8 @@ class Db {
      * @param string $sStatement
      * @return mixed (boolean | integer)
      */
-    public function exec($sStatement) {
+    public function exec($sStatement)
+    {
         $fStartTime = microtime(true);
         $mReturn = self::$_oInstance->exec($sStatement);
         $this->increment();
@@ -139,7 +147,8 @@ class Db {
      * @param int $iAttribute
      * @return mixed
      */
-    public function getAttribute($iAttribute) {
+    public function getAttribute($iAttribute)
+    {
         return self::$_oInstance->getAttribute($iAttribute);
     }
 
@@ -148,7 +157,8 @@ class Db {
      *
      * @return array
      */
-    public function getAvailableDrivers(){
+    public function getAvailableDrivers()
+    {
         return self::$_oInstance->getAvailableDrivers();
     }
 
@@ -158,7 +168,8 @@ class Db {
      * @param string $sName Name of the sequence object from which the ID should be returned.
      * @return string
      */
-    public function lastInsertId($sName) {
+    public function lastInsertId($sName)
+    {
         return self::$_oInstance->lastInsertId($sName);
     }
 
@@ -168,7 +179,8 @@ class Db {
      * @param string $sStatement A valid SQL statement for the target database server.
      * @return PDOStatement
      */
-    public function prepare($sStatement) {
+    public function prepare($sStatement)
+    {
         return self::$_oInstance->prepare($sStatement);
     }
 
@@ -178,7 +190,8 @@ class Db {
      * @param string $sStatement
      * @return boolean
      */
-    public function execute($sStatement) {
+    public function execute($sStatement)
+    {
         $fStartTime = microtime(true);
         $bReturn = self::$_oInstance->execute($sStatement);
         $this->increment();
@@ -192,7 +205,8 @@ class Db {
      * @param string $sStatement
      * @return mixed (object | boolean) PDOStatement object, or FALSE on failure.
      */
-    public function query($sStatement) {
+    public function query($sStatement)
+    {
         $fStartTime = microtime(true);
         $mReturn = self::$_oInstance->query($sStatement);
         $this->increment();
@@ -206,7 +220,8 @@ class Db {
      * @param string $sStatement
      * @return array
      */
-    public function queryFetchAllAssoc($sStatement) {
+    public function queryFetchAllAssoc($sStatement)
+    {
         return self::$_oInstance->query($sStatement)->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -216,7 +231,8 @@ class Db {
      * @param string $sStatement
      * @return array
      */
-    public function queryFetchRowAssoc($sStatement) {
+    public function queryFetchRowAssoc($sStatement)
+    {
         return self::$_oInstance->query($sStatement)->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -226,7 +242,8 @@ class Db {
      * @param string $sStatement
      * @return mixed
      */
-    public function queryFetchColAssoc($sStatement) {
+    public function queryFetchColAssoc($sStatement)
+    {
         return self::$_oInstance->query($sStatement)->fetchColumn();
     }
 
@@ -237,7 +254,8 @@ class Db {
      * @param integer $iParameterType
      * @return string
      */
-    public function quote($sInput, $iParameterType = 0) {
+    public function quote($sInput, $iParameterType = 0)
+    {
         return self::$_oInstance->quote($sInput, $iParameterType);
     }
 
@@ -246,7 +264,8 @@ class Db {
      *
      * @return boolean
      */
-    public function rollBack() {
+    public function rollBack()
+    {
         return self::$_oInstance->rollBack();
     }
 
@@ -257,7 +276,8 @@ class Db {
      * @param mixed $mValue
      * @return boolean
      */
-    public function setAttribute($iAttribute, $mValue) {
+    public function setAttribute($iAttribute, $mValue)
+    {
         return self::$_oInstance->setAttribute($iAttribute, $mValue);
     }
 
@@ -266,8 +286,9 @@ class Db {
      *
      * @return float number
      */
-    public static function queryCount() {
-        return self::$iCount;
+    public static function queryCount()
+    {
+        return self::$_iCount;
     }
 
     /**
@@ -275,7 +296,8 @@ class Db {
      *
      * @return mixed (object | boolean) PDOStatement object, or FALSE on failure.
      */
-    public static function showTables() {
+    public static function showTables()
+    {
         return self::getInstance()->query('SHOW TABLES');
     }
 
@@ -286,8 +308,9 @@ class Db {
      * @param float $fEndTime
      * @return void
      */
-    public function addTime($fStartTime, $fEndTime) {
-        self::$fTime += round($fEndTime - $fStartTime, 6);
+    public function addTime($fStartTime, $fEndTime)
+    {
+        self::$_fTime += round($fEndTime - $fStartTime, 6);
     }
 
     /**
@@ -295,8 +318,9 @@ class Db {
      *
      * @return string
      */
-    public static function time() {
-        return self::$fTime;
+    public static function time()
+    {
+        return self::$_fTime;
     }
 
     /**
@@ -306,9 +330,10 @@ class Db {
      * @param boolean $bTrim With or without a space before and after the table name. Default valut is "false", so with space before and after table name.
      * @return string prefixed table name, just prefix if table name is empty.
      */
-    public static function prefix($sTable = '', $bTrim = false) {
+    public static function prefix($sTable = '', $bTrim = false)
+    {
         $sSpace = (!$bTrim) ? ' ' : '';
-        return ($sTable !== '') ? $sSpace . self::$sPrefix . $sTable . $sSpace : self::$sPrefix;
+        return ($sTable !== '') ? $sSpace . self::$_sPrefix . $sTable . $sSpace : self::$_sPrefix;
     }
 
      /**
@@ -317,7 +342,8 @@ class Db {
      * @param object $oCloseCursor Db object close cursor of PDOStatement class. Default value NULL
      * @param bool $bCloseConnection Close connection of PDO. Default value TRUE
      */
-    public static function free(&$oCloseCursor = NULL, $bCloseConnection = TRUE) {
+    public static function free(&$oCloseCursor = NULL, $bCloseConnection = TRUE)
+    {
         // Close Cursor
         if(NULL !== $oCloseCursor)
             $oCloseCursor->closeCursor();
@@ -332,7 +358,8 @@ class Db {
      *
      * @return void
      */
-    public static function optimize() {
+    public static function optimize()
+    {
         $oAllTables = static::showTables();
         while($aTableNames = $oAllTables->fetch()) self::getInstance()->query('OPTIMIZE TABLE '. $aTableNames[0]);
         unset($oAllTables);
@@ -343,7 +370,8 @@ class Db {
      *
      * @return void
      */
-    public static function repair() {
+    public static function repair()
+    {
         $oAllTables = static::showTables();
         while($aTableNames = $oAllTables->fetch()) self::getInstance()->query('REPAIR TABLE '. $aTableNames[0]);
         unset($oAllTables);
@@ -358,8 +386,10 @@ class Db {
      * @throws \RuntimeException If the class is not found (invalid).
      * @return void
      */
-    public static function backup($sClass, $sPath, $sFormat) {
-        switch($sClass) {
+    public static function backup($sClass, $sPath, $sFormat)
+    {
+        switch($sClass)
+        {
             case self::MYSQL:
               $sClass = '\PH7\Framework\Db\Util\Backup\MySQL';
             break;
@@ -367,9 +397,10 @@ class Db {
             default:
               throw new \RuntimeException('The class "' . $sClass . '" is invalid!');
         }
-        self::$sBackupPath = $sPath;
-        self::$sBackupFormat = $sFormat;
-        $oSQLDump = new $sClass(PH7_DATABASE_HOST, self::$sUsername, self::$sPassword, PH7_DATABASE_NAME, self::$sBackupPath, self::$sBackupFormat);
+
+        self::$_sBackupPath = $sPath;
+        self::$_sBackupFormat = $sFormat;
+        $oSQLDump = new $sClass(PH7_DATABASE_HOST, self::$_sUsername, self::$_sPassword, PH7_DATABASE_NAME, self::$_sBackupPath, self::$_sBackupFormat);
         $oSQLDump->backup();
     }
 

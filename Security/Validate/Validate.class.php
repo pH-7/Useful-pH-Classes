@@ -9,7 +9,8 @@
 namespace PH7\Framework\Security\Validate;
 defined('PH7') or exit('Restricted access');
 
-class Validate {
+class Validate
+{
 
     const MAX_URL_LENGTH = 150;
 
@@ -20,7 +21,8 @@ class Validate {
      * @param boolean $bRealUrl Checks whether the URL actually exists. Default FALSE
      * @return boolean
      */
-    public function url($sUrl, $bRealUrl = false) {
+    public function url($sUrl, $bRealUrl = false)
+    {
         $sUrl = filter_var($sUrl, FILTER_SANITIZE_URL);
 
         if(!(filter_var($sUrl, FILTER_VALIDATE_URL) && mb_strlen($sUrl) <= static::MAX_URL_LENGTH)) return false;

@@ -10,10 +10,11 @@ namespace PH7\Framework\Periodic;
 defined('PH7') or exit('Restricted access');
 use PH7\Framework\Db\Db;
 
-class Cron {
+class Cron
+{
 
-    public function __construct() {
-
+    public function __construct()
+    {
         // Checks the security hash cron
         if(empty($_GET['secret_word']) || strcmp($_GET['secret_word'], PH7_CRON_SECURITY_HASH) != 0) {
             header('HTTP/1.1 403 Forbidden');
@@ -47,22 +48,28 @@ class Cron {
         echo '<br />' . gettext('Done!') . '<br />';
     }
 
-    protected function backup() {
-        try {
+    protected function backup()
+    {
+        try
+        {
             Db::backup(Db::MYSQL, PH7_PATH_BACKUP_SQL, PH7_BACKUP_FORMAT_TYPE);
             echo gettext('Backup of the Database... Ok!') . '<br />';
-        } catch (\RuntimeException $oE) {
+        }
+        catch (\RuntimeException $oE)
+        {
             header('HTTP/1.1 500 Internal Server Error');
             exit($oE->getMessage());
         }
     }
 
-    protected function optimize() {
+    protected function optimize()
+    {
         Db::optimize();
         echo gettext('Optimizing tables... OK!') . '<br />';
     }
 
-    protected function repair() {
+    protected function repair()
+    {
         Db::repair();
         echo gettext('Repair of the Database... Ok!') . '<br />';
     }
