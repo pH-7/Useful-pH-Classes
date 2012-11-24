@@ -339,18 +339,21 @@ class Db
      /**
      * Free database.
      *
-     * @param object $oCloseCursor Db object close cursor of PDOStatement class. Default value NULL
+     * @param object $oDb \PH7\Framework\Db Close cursor of PDOStatement class. Default value NULL
      * @param bool $bCloseConnection Close connection of PDO. Default value TRUE
+     * @return void
      */
-    public static function free(&$oCloseCursor = NULL, $bCloseConnection = TRUE)
+    public static function free(&$oDb = NULL, $bCloseConnection = TRUE)
     {
         // Close Cursor
-        if(NULL !== $oCloseCursor)
-            $oCloseCursor->closeCursor();
+        if(NULL !== $oDb)
+        {
+            $oDb->closeCursor();
 
-        // Free instance object PDO
-        if(TRUE === $bCloseConnection)
-            return self::$_oInstance = NULL;
+            // Free instance object PDO
+            if(TRUE === $bCloseConnection)
+                $oDb = NULL;
+        }
     }
 
     /**
