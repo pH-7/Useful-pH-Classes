@@ -350,7 +350,7 @@ class Db
         {
             $oDb->closeCursor();
 
-            // Free instance object PDO
+            // Free instance of the PDO object
             if(TRUE === $bCloseConnection)
                 $oDb = NULL;
         }
