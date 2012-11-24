@@ -336,7 +336,7 @@ class Db
         return ($sTable !== '') ? $sSpace . self::$_sPrefix . $sTable . $sSpace : self::$_sPrefix;
     }
 
-     /**
+    /**
      * Free database.
      *
      * @param object $oDb \PH7\Framework\Db Close cursor of PDOStatement class. Default value NULL
